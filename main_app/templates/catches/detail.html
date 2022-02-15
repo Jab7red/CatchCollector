@@ -14,5 +14,9 @@
       <p>Kept: No</p>
       {% endif %}
     </div>
+    <div class="card-action">
+      <a href="{% url 'catches_update' catch.id %}">Edit</a>
+      <a href="{% url 'catches_delete' catch.id %}">Delete</a>
+    </div>
 </div>
 {% endblock %}
