@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Catches</h1>
+
+{% for catch in catches %}
+<div class="card">
+  <a href="{% url 'detail' catch.id %}">
+    <div class="card-content">
+      <span class="card-title">{{ catch.species }}</span>
+      <p>Length: {{ catch.length }} in.</p>
+      <p>Weight: {{ catch.weight }} lbs</p>
+      {% if catch.length >= 14 %}
+      <p>Kept: Yes</p>
+      {% else %}
+      <p>Kept: No</p>
+      {% endif %}
+    </div>
+  </a>
+</div>
+{% endfor %} {% endblock %}
