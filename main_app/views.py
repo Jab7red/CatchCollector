@@ -1,9 +1,10 @@
-from ast import Del
-from dataclasses import fields
-from django.shortcuts import render
+
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Catch
+
+from .forms import GearForm
 # Create your views here.
 
 
@@ -20,7 +21,18 @@ def catches_index(request):
 
 def catches_detail(request, catch_id):
     catch = Catch.objects.get(id=catch_id)
-    return render(request, 'catches/detail.html', { 'catch': catch })
+    gear_form = GearForm()
+    return render(request, 'catches/detail.html', { 
+        'catch': catch, 'gear_form': gear_form 
+    })
+
+def add_gear(request, catch_id):
+    form = GearForm(request.POST)
+    if form.is_valid():
+        new_gear = form.save(commit=False)
+        new_gear.catch_id = catch_id
+        new_gear.save()
+    return redirect('detail', catch_id=catch_id)
 
 class CatchCreate(CreateView):
     model = Catch
